@@ -56,7 +56,7 @@ EOF
 
 docker build -t "${CONTAINER}:${VERSION}" --platform ${ARCH} --pull .
 
-docker run --rm "${CONTAINER}:${VERSION}" bash -xc '
+docker run -i --rm "${CONTAINER}:${VERSION}" bash -xc '
     uname -a
     echo
     cat /etc/os-release 2>/dev/null
