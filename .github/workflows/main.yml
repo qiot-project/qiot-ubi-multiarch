@@ -27,4 +27,5 @@ jobs:
 
       - name: Build the Docker image
         run: |
+            docker run --rm --privileged multiarch/qemu-user-static:register --reset
             ./build.sh -a aarch64 -c qiot-ubi-multiarch -v latest -q v5.1.0-7
