@@ -23,3 +23,7 @@ Parameters:
 ```
 ./build.sh -a aarch64 -c qiot-ubi-multiarch -v 1.0 -q v5.1.0-7
 ```
+
+## Releases
+
+Releases are published to Quay.io (https://quay.io/repository/qiotcovid19/ubi-multiarch)
