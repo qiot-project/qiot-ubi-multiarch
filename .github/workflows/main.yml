@@ -1,31 +1,23 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
-
-# Controls when the action will run. 
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+env:
+  DOCKER_ARCH: aarch64
+  QEMU_STATIC_VERSION: v5.1.0-7
+  DOCKER_CONTAINER: ubi-multiarch
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: Build the Docker image
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            ./build.sh -a aarch64 -c qiot-ubi-multiarch -v latest -q v5.1.0-7
+            ./build.sh -a "$env:DOCKER_ARCH" -c "$env:DOCKER_CONTAINER" -v latest -q "$env:QEMU_STATIC_VERSION"
