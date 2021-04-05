@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_ARCH: linux/arm/v7
+  DOCKER_ARCH: aarch64
   QEMU_STATIC_VERSION: v5.1.0-7
   DOCKER_CONTAINER: ubi-multiarch
 
