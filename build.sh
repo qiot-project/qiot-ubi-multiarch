@@ -35,29 +35,29 @@ function wget_and_sleep() {
     return ${return_code}
 }
 
-cat > Dockerfile <<EOF
-FROM registry.access.redhat.com/ubi8/ubi
-LABEL "architecture"="aarch64"
-LABEL "multiarch"="true"
-RUN dnf -y upgrade && dnf clean all
-EOF
+# cat > Dockerfile <<EOF
+# FROM registry.access.redhat.com/ubi8/ubi
+# LABEL "architecture"="aarch64"
+# LABEL "multiarch"="true"
+# RUN dnf -y upgrade
+# EOF
 
 if [ -n "${ARCH}" ]; then
     if [ ! -f x86_64_qemu-${QARCHEMU_ARCH}-static.tar.gz ]; then
         wget_and_sleep ${wget_opts} https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_VER}/x86_64_qemu-${ARCH}-static.tar.gz
     fi
-    cat >> Dockerfile <<EOF
-# Add qemu-user-static binary for x86_64 builders
-ADD x86_64_qemu-${ARCH}-static.tar.gz /usr/bin
-EOF
+#     cat >> Dockerfile <<EOF
+# # Add qemu-user-static binary for x86_64 builders
+# ADD x86_64_qemu-${ARCH}-static.tar.gz /usr/bin
+# EOF
 fi
 
-cat >> Dockerfile <<EOF
-# overwrite this with 'CMD []' in a dependent Dockerfile
-CMD ["/bin/bash"]
-EOF
+# cat >> Dockerfile <<EOF
+# # overwrite this with 'CMD []' in a dependent Dockerfile
+# CMD ["/bin/bash"]
+# EOF
 
-docker build -t "${CONTAINER}:${VERSION}" --platform ${ARCH} --pull .
+docker build --build-arg QEMU_STATIC_TARBALL=x86_64_qemu-${ARCH}-static.tar.gz -t "${CONTAINER}:${VERSION}" --platform ${ARCH} --pull .
 
 docker run -i --rm "${CONTAINER}:${VERSION}" bash -xc '
     uname -a
