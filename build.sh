@@ -37,6 +37,9 @@ function wget_and_sleep() {
 
 cat > Dockerfile <<EOF
 FROM registry.access.redhat.com/ubi8/ubi
+RUN dnf -y upgrade && dnf clean all
+LABEL "architecture"="aarch64"
+LABEL "multiarch"="true"
 EOF
 
 if [ -n "${ARCH}" ]; then
