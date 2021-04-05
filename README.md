@@ -26,4 +26,4 @@ Parameters:
 
 ## Releases
 
-Releases are published to Quay.io (https://quay.io/repository/qiotcovid19/ubi-multiarch)
+Releases are published to Quay.io (https://quay.io/repository/qiot/ubi-multiarch)
