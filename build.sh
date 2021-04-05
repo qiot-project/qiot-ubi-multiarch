@@ -57,7 +57,7 @@ cat >> Dockerfile <<EOF
 CMD ["/bin/bash"]
 EOF
 
-docker build -t "${CONTAINER}:${VERSION}" --platform linux/arm/v7 --pull .
+docker build -t "${CONTAINER}:${VERSION}" --platform ${ARCH} --pull .
 
 docker run -i --rm "${CONTAINER}:${VERSION}" bash -xc '
     uname -a
