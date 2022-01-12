@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.3
+FROM registry.access.redhat.com/ubi8/ubi:8.5
 ARG QEMU_STATIC_TARBALL
 LABEL "architecture"="aarch64"
 LABEL "multiarch"="true"
