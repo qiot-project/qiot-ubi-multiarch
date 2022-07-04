@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+  
+  workflow_dispatch:
+
+jobs:
+  create_and_publish_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+              
+      - name: Load environment variables from .env files 
+        uses: c-py/action-dotenv-to-setenv@v3
+        with:
+          env-file: variables.env
+
+      - name: Get the version
+        id: get_version
+        run: echo "::set-output name=VERSION::${GITHUB_REF##refs/tags/v}"
+
+      - name: Build the Docker image
+        run: |
+            docker run --rm --privileged multiarch/qemu-user-static:register --reset
+            ./build.sh -u "$UBI_IMAGE_VERSION" -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v "$PROJECT_VERSION" -q "$QEMU_STATIC_VERSION"
+      - name: Push To Quay
+        id: push-to-quay
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ env.DOCKER_CONTAINER }}
+          tag: ${{ steps.get_version.outputs.VERSION }}
+          registry: ${{ env.DOCKER_REPO }}
+          username: ${{ secrets.QUAY_ALL_USERNAME }}
+          password: ${{ secrets.QUAY_ALL_PASSWORD }}

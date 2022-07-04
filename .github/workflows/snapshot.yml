@@ -12,8 +12,6 @@ on:
       - .github/workflows/**
       - .gitignore
       - LICENSE
-      - mvnw
-      - mvnw.cmd
       - README.md
       - release.sh
     branches:
@@ -43,4 +41,4 @@ jobs:
       - name: Build the Docker image
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            ./build.sh -u "$UBI_IMAGE_VERSION" -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v $PROJECT_VERSION -q "$QEMU_STATIC_VERSION"
+            ./build.sh -u "$UBI_IMAGE_VERSION" -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v "$PROJECT_VERSION" -q "$QEMU_STATIC_VERSION"
