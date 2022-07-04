@@ -27,6 +27,7 @@ jobs:
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
             ./build.sh -u "$UBI_IMAGE_VERSION" -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v "$PROJECT_VERSION" -q "$QEMU_STATIC_VERSION"
+            docker tag $DOCKER_CONTAINER:$PROJECT_VERSION $DOCKER_CONTAINER:latest
       - name: Push To Quay
         id: push-to-quay
         uses: redhat-actions/push-to-registry@v2
