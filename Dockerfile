@@ -1,7 +1,7 @@
+FROM registry.access.redhat.com/ubi8/ubi:$UBI_VERSION
 ARG UBI_VERSION
 ARG ARCH
 ARG QEMU_STATIC_TARBALL
-FROM registry.access.redhat.com/ubi8/ubi:$UBI_VERSION
 LABEL "architecture"="$ARCH"
 LABEL "multiarch"="true"
 # Add qemu-user-static binary for x86_64 builders
