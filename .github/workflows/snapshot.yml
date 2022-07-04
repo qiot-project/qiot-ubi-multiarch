@@ -22,11 +22,6 @@ on:
     branches:
       - develop
 
-env:
-  DOCKER_ARCH: aarch64
-  QEMU_STATIC_VERSION: v7.0.0-7
-  DOCKER_CONTAINER: ubi-multiarch
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,7 +32,7 @@ jobs:
       - name: Load environment variables from .env files 
         uses: c-py/action-dotenv-to-setenv@v3
         with:
-          env-file: .env
+          env-file: variables.env
         
       - name: Test imported environment variables 
         shell: bash
