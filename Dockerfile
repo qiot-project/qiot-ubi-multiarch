@@ -1,5 +1,5 @@
-FROM registry.access.redhat.com/ubi8/ubi:$UBI_VERSION
 ARG UBI_VERSION
+FROM registry.access.redhat.com/ubi8/ubi:$UBI_VERSION
 ARG ARCH
 ARG QEMU_STATIC_TARBALL
 LABEL "architecture"="$ARCH"
