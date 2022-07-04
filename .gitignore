@@ -1,2 +1,3 @@
 *.tar*
 /.project
+/release.yml

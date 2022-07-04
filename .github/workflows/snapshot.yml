@@ -1,0 +1,52 @@
+name: Nightly Build (from Develop branch)
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 2 * * *'
+  
+  push:
+    paths-ignore:
+      - .github/workflows/**
+      - .gitignore
+      - build.sh
+      - build-aarch64.sh
+      - build-jvm.sh
+      - LICENSE
+      - mvnw
+      - mvnw.cmd
+      - README.md
+      - release.sh
+    branches:
+      - develop
+
+env:
+  DOCKER_ARCH: aarch64
+  QEMU_STATIC_VERSION: v7.0.0-7
+  DOCKER_CONTAINER: ubi-multiarch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Load environment variables from .env files 
+        uses: c-py/action-dotenv-to-setenv@v3
+        with:
+          env-file: .env
+        
+      - name: Test imported environment variables 
+        shell: bash
+        run: |
+          echo "DOCKER_ARCH: $DOCKER_ARCH"
+          echo "QEMU_STATIC_VERSION: $QEMU_STATIC_VERSION"
+          echo "DOCKER_CONTAINER: $DOCKER_CONTAINER"
+
+#      - name: Build the Docker image
+#        run: |
+#            docker run --rm --privileged multiarch/qemu-user-static:register --reset
+#            ./build.sh -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v latest -q "$QEMU_STATIC_VERSION"
