@@ -47,6 +47,7 @@ function wget_and_sleep() {
 if [ -n "${ARCH}" ]; then
     if [ ! -f x86_64_qemu-${QARCHEMU_ARCH}-static.tar.gz ]; then
         wget_and_sleep ${wget_opts} https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_VER}/x86_64_qemu-${ARCH}-static.tar.gz
+                                   #https://github.com/multiarch/qemu-user-static/releases/download/v7.0.0-7/x86_64_qemu-aarch64-static.tar.gz
     fi
 #     cat >> Dockerfile <<EOF
 # # Add qemu-user-static binary for x86_64 builders
