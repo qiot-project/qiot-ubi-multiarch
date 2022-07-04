@@ -34,11 +34,13 @@ jobs:
       - name: Test imported environment variables ARCH
         shell: bash
         run: |
+          echo "PROJECT_VERSION: $PROJECT_VERSION"
           echo "DOCKER_ARCH: $DOCKER_ARCH"
           echo "QEMU_STATIC_VERSION: $QEMU_STATIC_VERSION"
           echo "DOCKER_CONTAINER: $DOCKER_CONTAINER"
+          echo "UBI_IMAGE_VERSION: $UBI_IMAGE_VERSION"
 
       - name: Build the Docker image
         run: |
             docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            ./build.sh -u "$UBI_IMAGE_VERSION" -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v latest -q "$QEMU_STATIC_VERSION"
+            ./build.sh -u "$UBI_IMAGE_VERSION" -a "$DOCKER_ARCH" -c "$DOCKER_CONTAINER" -v $PROJECT_VERSION -q "$QEMU_STATIC_VERSION"
