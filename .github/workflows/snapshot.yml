@@ -37,7 +37,7 @@ jobs:
       - name: Load environment variables from .env files 
         uses: c-py/action-dotenv-to-setenv@v3
         with:
-          env-file: .env
+          env-file: variables.env
         
       - name: Test imported environment variables 
         shell: bash
