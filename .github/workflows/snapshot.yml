@@ -11,9 +11,6 @@ on:
     paths-ignore:
       - .github/workflows/**
       - .gitignore
-      - build.sh
-      - build-aarch64.sh
-      - build-jvm.sh
       - LICENSE
       - mvnw
       - mvnw.cmd
