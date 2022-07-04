@@ -60,7 +60,7 @@ fi
 # CMD ["/bin/bash"]
 # EOF
 
-docker build --build-arg UBI_VERSION=${UBI_VERSION} --build-arg ARCH=${ARCH} --build-arg QEMU_STATIC_TARBALL=x86_64_qemu-${ARCH}-static.tar.gz -t "${CONTAINER_NAME}:${CONTAINER_VERSION}" --platform linux/arm64 --pull .
+docker build --build-arg UBI_VERSION=${UBI_VERSION} --build-arg ARCH=${ARCH} --build-arg QEMU_STATIC_TARBALL=x86_64_qemu-${ARCH}-static.tar.gz -t "${CONTAINER_NAME}:${CONTAINER_VERSION}" --platform ${ARCH} --pull .
 
 docker run -i --rm "${CONTAINER_NAME}:${CONTAINER_VERSION}" bash -xc '
     uname -a
