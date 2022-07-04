@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 function usage() {
-    echo "Usage: ./build.sh -a [architecture eg. aarch64] -c [container name] -v [container version] -q [qemu version]"
+    echo "Usage: ./build.sh  -u [ubi image version] -a [architecture eg. aarch64] -c [container name] -v [container version] -q [qemu version]"
     exit 1
 }
 
@@ -10,18 +10,20 @@ OPTIND=1 # Reset in case getopts has been used previously in the shell.
 
 while getopts "a:c:v:q:" opt; do
     case "$opt" in
+    u)  UBI_VERSION=$OPTARG
+        ;;
     a)  ARCH=$OPTARG
         ;;
-    c)  CONTAINER=$OPTARG
+    c)  CONTAINER_NAME=$OPTARG
         ;;
-    v)  VERSION=$OPTARG
+    v)  CONTAINER_VERSION=$OPTARG
         ;;
     q)  QEMU_VER=$OPTARG
         ;;
     esac
 done
 
-if [ -z "${ARCH}" ] || [ -z "${CONTAINER}" ] || [ -z "${VERSION}" ] || [ -z "${QEMU_VER}" ]; then
+if [ -z "${UBI_VERSION}" ] || [ -z "${ARCH}" ] || [ -z "${CONTAINER_NAME}" ] || [ -z "${CONTAINER_VERSION}" ] || [ -z "${QEMU_VER}" ]; then
     usage
 fi
 
@@ -57,9 +59,9 @@ fi
 # CMD ["/bin/bash"]
 # EOF
 
-docker build --build-arg QEMU_STATIC_TARBALL=x86_64_qemu-${ARCH}-static.tar.gz -t "${CONTAINER}:${VERSION}" --platform ${ARCH} --pull .
+docker build --build-arg UBI_VERSION=${UBI_VERSION} --build-arg ARCH=${ARCH} --build-arg QEMU_STATIC_TARBALL=x86_64_qemu-${ARCH}-static.tar.gz -t "${CONTAINER_NAME}:${CONTAINER_VERSION}" --platform ${ARCH} --pull .
 
-docker run -i --rm "${CONTAINER}:${VERSION}" bash -xc '
+docker run -i --rm "${CONTAINER_NAME}:${CONTAINER_VERSION}" bash -xc '
     uname -a
     echo
     cat /etc/os-release 2>/dev/null
