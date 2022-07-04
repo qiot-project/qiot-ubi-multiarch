@@ -8,7 +8,7 @@ function usage() {
 # A POSIX variable
 OPTIND=1 # Reset in case getopts has been used previously in the shell.
 
-while getopts "a:c:v:q:" opt; do
+while getopts "u:a:c:v:q:" opt; do
     case "$opt" in
     u)  UBI_VERSION=$OPTARG
         ;;
